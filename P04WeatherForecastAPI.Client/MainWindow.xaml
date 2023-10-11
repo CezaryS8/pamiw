@@ -13,11 +13,20 @@
             <Button x:Name="btnSearch" Content="Search" Click="btnSearch_Click"></Button>
             <ListBox x:Name="lbData" DisplayMemberPath="LocalizedName" SelectionChanged="lbData_SelectionChanged"></ListBox>
         </StackPanel>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="minTemperatureLabel" Text="Minimum Temperature:" />
+            <Label x:Name="lblMinTemperatureValue" Content="" />
+            <TextBlock x:Name="maxTemperatureLabel" Text="Maximum Temperature:" />
+            <Label x:Name="lblMaxTemperatureValue" Content="" />
+        </StackPanel>
+
         <StackPanel>
             <Label HorizontalAlignment="Center" Content="Temperature for city:"></Label>
             <Label x:Name="lblCityName" HorizontalAlignment="Center" Content="..."></Label>
             <Label  HorizontalAlignment="Center" Content="is:"></Label>
             <Label x:Name="lblTemperatureValue" HorizontalAlignment="Center" Content=".."></Label>
+            
 
             <Label Content="Historical current conditions:" ></Label>
             <ListBox x:Name="lbHistoricalCurrentConditions">
@@ -36,7 +45,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
-
+        <StackPanel>
             <Label Content="Top 50 cities:" ></Label>
             <Button x:Name="btnSearchTopCities" Content="Search" Click="btnSearchTopCities_Click"></Button>
             <ListBox x:Name="lbTopCities">

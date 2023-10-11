@@ -41,6 +41,14 @@ namespace P04WeatherForecastAPI.Client
 
                 HistoricalCurrentConditions[] historicalCurrentConditionsArray= await accuWeatherService.GetHistoricalCurrentConditions(selectedCity.Key);
                 lbHistoricalCurrentConditions.ItemsSource = historicalCurrentConditionsArray;
+
+                DailyForecastRoot dailyForecastRoot= await accuWeatherService.GetOneDayOfDailyForecasts(selectedCity.Key);
+                DailyForecast dailyForecast = dailyForecastRoot.DailyForecasts[0];
+                double minTempValue = dailyForecast.Temperature.Minimum.Value;
+                lblMinTemperatureValue.Content = Convert.ToString(minTempValue);
+                double maxTempValue = dailyForecast.Temperature.Maximum.Value;
+                lblManTemperatureValue.Content = Convert.ToString(maxTempValue);
+
             }
         }
         private async void btnSearchTopCities_Click(object sender, RoutedEventArgs e)
@@ -50,5 +58,7 @@ namespace P04WeatherForecastAPI.Client
 
             lbTopCities.ItemsSource = topCities;
         }
+        
+
     }
 }

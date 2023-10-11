@@ -15,9 +15,10 @@ namespace P04WeatherForecastAPI.Client.Services
         private const string current_conditions_endpoint = "currentconditions/v1/{0}?apikey={1}&language={2}";
         private const string historical_current_conditions_endpoint = "currentconditions/v1/{0}/historical/24?apikey={1}&language={2}";
         private const string top_cities_list_endpoint = "locations/v1/topcities/50/?apikey={0}&language={1}";
+        private const string one_day_of_daily_forecasts_endpoint = "forecasts/v1/daily/1day/{0}?apikey={1}&language={2}";
 
         // private const string one_day_of_daily_forecasts = "forecasts/v1/daily/1day/{0}?apikey={1}&language={2}";
-         // "api_key":  "2QkvQQxu21HOJzf4rcEoeb7c2AanB7Mb"
+        // "api_key":  "2QkvQQxu21HOJzf4rcEoeb7c2AanB7Mb"
         string api_key;
         string language;
 
@@ -26,7 +27,7 @@ namespace P04WeatherForecastAPI.Client.Services
             var builder = new ConfigurationBuilder()
                 .AddUserSecrets<App>()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsetings.json"); 
+                .AddJsonFile("appsetings.json");
 
             var configuration = builder.Build();
             api_key = configuration["api_key"];
@@ -49,12 +50,12 @@ namespace P04WeatherForecastAPI.Client.Services
 
         public async Task<Weather> GetCurrentConditions(string cityKey)
         {
-            string uri = base_url + "/" + string.Format(current_conditions_endpoint, cityKey, api_key,language);
+            string uri = base_url + "/" + string.Format(current_conditions_endpoint, cityKey, api_key, language);
             using (HttpClient client = new HttpClient())
             {
                 var response = await client.GetAsync(uri);
                 string json = await response.Content.ReadAsStringAsync();
-                Weather[] weathers= JsonConvert.DeserializeObject<Weather[]>(json);
+                Weather[] weathers = JsonConvert.DeserializeObject<Weather[]>(json);
                 return weathers.FirstOrDefault();
             }
         }
@@ -70,7 +71,7 @@ namespace P04WeatherForecastAPI.Client.Services
             }
         }
 
-       public async Task<City[]> GetTopCitiesList()
+        public async Task<City[]> GetTopCitiesList()
         {
             string uri = base_url + "/" + string.Format(top_cities_list_endpoint, api_key, language);
             using (HttpClient client = new HttpClient())
@@ -79,6 +80,18 @@ namespace P04WeatherForecastAPI.Client.Services
                 string json = await response.Content.ReadAsStringAsync();
                 City[] cities = JsonConvert.DeserializeObject<City[]>(json);
                 return cities;
+            }
+        }
+
+        public async Task<DailyForecastRoot> GetOneDayOfDailyForecasts(string cityKey)
+        {
+            string uri = base_url + "/" + string.Format(one_day_of_daily_forecasts_endpoint, cityKey, api_key, language);
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync(uri);
+                string json = await response.Content.ReadAsStringAsync();
+                DailyForecastRoot dailyForecastRoot = JsonConvert.DeserializeObject<DailyForecastRoot>(json);
+                return dailyForecastRoot;
             }
         }
 

@@ -35,11 +35,23 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+        </StackPanel>
 
-            <!-- <Label HorizontalAlignment="Center" Content="Min temperature:"></Label>
-            <Label x:Name="lblMinTemperatureValue" HorizontalAlignment="Center" Content="..."></Label>
-            <Label HorizontalAlignment="Center" Content="Max temperature:"></Label>
-            <Label x:Name="lblMaxTemperatureValue" HorizontalAlignment="Center" Content="..."></Label> -->
+            <Label Content="Top 50 cities:" ></Label>
+            <Button x:Name="btnSearchTopCities" Content="Search" Click="btnSearchTopCities_Click"></Button>
+            <ListBox x:Name="lbTopCities">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                        <TextBlock>
+                            <Run Text="{Binding LocalizedName}" />
+                            <Run Text=" | Administrative area: " />
+                            <Run Text="{Binding AdministrativeArea.LocalizedName}" />
+                        </TextBlock>
+                    </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
 
     </DockPanel>
